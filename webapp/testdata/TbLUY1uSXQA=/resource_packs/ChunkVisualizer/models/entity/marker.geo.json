@@ -1,0 +1,173 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.marker0",
+        "texture_width": 16,
+        "texture_height": 16
+      },
+      "bones": [
+        {
+          "name": "marker0",
+          "pivot": [ 0.0, 16.0, 0.0 ],
+          "cubes": [
+            {
+              "origin": [ -8, 8, 0.0 ],
+              "size": [ 16.0, 16.0, 0.0 ],
+              "uv": [ 0, 0 ],
+              "rotation": [ 0.0, 0.0, 0.0 ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": {
+        "identifier": "geometry.marker1",
+        "texture_width": 16,
+        "texture_height": 16
+      },
+      "bones": [
+        {
+          "name": "marker1",
+          "pivot": [ 0.0, 16.0, 0.0 ],
+          "cubes": [
+            {
+              "origin": [ -8, 8, 0.0 ],
+              "size": [ 16.0, 16.0, 0.0 ],
+              "uv": [ 0, 0 ],
+              "rotation": [ 0.0, 0.0, 0.0 ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": {
+        "identifier": "geometry.marker2",
+        "texture_width": 16,
+        "texture_height": 16
+      },
+      "bones": [
+        {
+          "name": "marker2",
+          "pivot": [ 0.0, 16.0, 0.0 ],
+          "cubes": [
+            {
+              "origin": [ -8, 8, 0.0 ],
+              "size": [ 16.0, 16.0, 0.0 ],
+              "uv": [ 0, 0 ],
+              "rotation": [ 0.0, 0.0, 0.0 ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": {
+        "identifier": "geometry.marker3",
+        "texture_width": 16,
+        "texture_height": 16
+      },
+      "bones": [
+        {
+          "name": "marker3",
+          "pivot": [ 0.0, 16.0, 0.0 ],
+          "cubes": [
+            {
+              "origin": [ -8, 8, 0.0 ],
+              "size": [ 16.0, 16.0, 0.0 ],
+              "uv": [ 0, 0 ],
+              "rotation": [ 0.0, 0.0, 0.0 ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": {
+        "identifier": "geometry.marker4",
+        "texture_width": 16,
+        "texture_height": 16
+      },
+      "bones": [
+        {
+          "name": "marker4",
+          "pivot": [ 0.0, 16.0, 0.0 ],
+          "cubes": [
+            {
+              "origin": [ -8, 8, 0.0 ],
+              "size": [ 16.0, 16.0, 0.0 ],
+              "uv": [ 0, 0 ],
+              "rotation": [ 0.0, 0.0, 0.0 ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": {
+        "identifier": "geometry.marker5",
+        "texture_width": 16,
+        "texture_height": 16
+      },
+      "bones": [
+        {
+          "name": "marker5",
+          "pivot": [ 0.0, 16.0, 0.0 ],
+          "cubes": [
+            {
+              "origin": [ -8, 8, 0.0 ],
+              "size": [ 16.0, 16.0, 0.0 ],
+              "uv": [ 0, 0 ],
+              "rotation": [ 0.0, 0.0, 0.0 ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": {
+        "identifier": "geometry.marker6",
+        "texture_width": 16,
+        "texture_height": 16
+      },
+      "bones": [
+        {
+          "name": "marker6",
+          "pivot": [ 0.0, 16.0, 0.0 ],
+          "cubes": [
+            {
+              "origin": [ -8, 8, 0.0 ],
+              "size": [ 16.0, 16.0, 0.0 ],
+              "uv": [ 0, 0 ],
+              "rotation": [ 0.0, 0.0, 0.0 ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": {
+        "identifier": "geometry.marker7",
+        "texture_width": 16,
+        "texture_height": 16
+      },
+      "bones": [
+        {
+          "name": "marker7",
+          "pivot": [ 0.0, 16.0, 0.0 ],
+          "cubes": [
+            {
+              "origin": [ -8, 8, 0.0 ],
+              "size": [ 16.0, 16.0, 0.0 ],
+              "uv": [ 0, 0 ],
+              "rotation": [ 0.0, 0.0, 0.0 ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

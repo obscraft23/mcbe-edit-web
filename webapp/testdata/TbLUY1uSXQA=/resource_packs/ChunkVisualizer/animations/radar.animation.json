@@ -1,0 +1,55 @@
+{
+	"format_version" : "1.8.0",
+	"animations": {
+		"animation.player.radar" : {
+			"loop" : true,
+			"bones" : {
+				"mapbase" : {
+					"rotation" : [ "0", "0", "0"  ],
+					"position" : [ "-350 + -500", "174 + (query.is_swimming * -24.25)", "10.004" ],
+					"scale" : "5.2"
+				},
+				"marker0" : {
+					"rotation" : [ "0", "0", "0"  ],
+					"position" : [ "-350 + -500 + variable.dx0", "174 + (query.is_swimming * -24.25) - variable.dz0", "10.000" ],
+					"scale" : "5.2"
+				},
+				"marker1" : {
+					"rotation" : [ "0", "0", "0"  ],
+					"position" : [ "-350 + -500 + variable.dx1", "174 + (query.is_swimming * -24.25) - variable.dz1", "10.000" ],
+					"scale" : "5.2"
+				},
+				"marker2" : {
+					"rotation" : [ "0", "0", "0"  ],
+					"position" : [ "-350 + -500 + variable.dx2", "174 + (query.is_swimming * -24.25) - variable.dz2", "10.000" ],
+					"scale" : "5.2"
+				},
+				"marker3" : {
+					"rotation" : [ "0", "0", "0"  ],
+					"position" : [ "-350 + -500 + variable.dx3", "174 + (query.is_swimming * -24.25) - variable.dz3", "10.000" ],
+					"scale" : "5.2"
+				},
+				"marker4" : {
+					"rotation" : [ "0", "0", "0"  ],
+					"position" : [ "-350 + -500 + variable.dx4", "174 + (query.is_swimming * -24.25) - variable.dz4", "10.000" ],
+					"scale" : "5.2"
+				},
+				"marker5" : {
+					"rotation" : [ "0", "0", "0"  ],
+					"position" : [ "-350 + -500 + variable.dx5", "174 + (query.is_swimming * -24.25) - variable.dz5", "10.000" ],
+					"scale" : "5.2"
+				},
+				"marker6" : {
+					"rotation" : [ "0", "0", "0"  ],
+					"position" : [ "-350 + -500 + variable.dx6", "174 + (query.is_swimming * -24.25) - variable.dz6", "10.000" ],
+					"scale" : "5.2"
+				},
+				"marker7" : {
+					"rotation" : [ "0", "0", "0"  ],
+					"position" : [ "-350 + -500 + variable.dx7", "174 + (query.is_swimming * -24.25) - variable.dz7", "10.000" ],
+					"scale" : "5.2"
+				}
+			}
+		}
+	}
+}

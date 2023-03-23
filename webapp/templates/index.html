@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}{% endblock %}</title>
+
+</head>
+<body>
+
+{% block content %}
+    <h1>Create Blog Post</h1>
+
+<form method='POST' name ="upload" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" id="file_input" name="file_field" webkitdirectory directory/>
+    <input type="text" id="directories" name="directories" hidden />
+    
+    <button id="btn">送信</button>
+    
+</form>
+<script>
+ var btn = document.getElementById('btn');
+ files = document.querySelector("#file_input").files;
+ //document.querySelector("#file_input").addEventListener("change", function() {
+ btn.addEventListener('click', function() {
+    files = document.querySelector("#file_input").files;
+    var directories = {}
+    for (var file of files) {
+      file.webkitRelativePath
+      directories[file.name] = file.webkitRelativePath
+    }
+    directories = JSON.stringify(directories);
+    document.querySelector("#directories").value = directories
+    document.upload.submit();
+ });
+</script>
+{% endblock %}
+
+</body>
+</html>
