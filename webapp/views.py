@@ -156,4 +156,3 @@ def testview(request):
         worldID = request.GET.get("worldID")
         form1 = dimentionChoiceForm({"worldid": worldID,"choice_dim":0,"choice_type":0})
         return render(request, 'dimention_choice.html', {"form1": form1})
-    
