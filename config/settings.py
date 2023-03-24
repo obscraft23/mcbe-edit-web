@@ -114,9 +114,9 @@ USE_I18N = True
 
 USE_TZ = True
 
-LANGUAGE_CODE = 'ja'
+LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/Tokyo'
+TIME_ZONE = 'UTC'
 
 
 # Static files (CSS, JavaScript, Images)
