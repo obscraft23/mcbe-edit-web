@@ -1,5 +1,4 @@
 Django==4.1.7
-django-jsoneditor== 0.2.4
+django-jsoneditor==0.2.4
 numpy==1.24.2
-scikit-build==0.16.7
 pybedrock==0.0.3
