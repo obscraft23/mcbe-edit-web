@@ -2,7 +2,6 @@ from django.shortcuts import render
 
 # Create your views here.
 from .forms import dimentionChoiceForm, uploadForm, NBTeditForm
-from .models import BlogPost
 import os
 import json
 import uuid

@@ -7,6 +7,7 @@ from .jsonwidget import JSONField as JSONField2
 
 import json
 import os
+"""
 def loadjson():
     file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),'custom.spawner.json')
     with open(file_path,"rt",encoding="utf-8") as f:
@@ -20,3 +21,4 @@ class BlogPost(models.Model):
 
     title = models.CharField(max_length=255)
     #content = JSONField(default=loadjson())
+"""
