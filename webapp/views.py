@@ -8,10 +8,9 @@ import uuid
 from django.urls import reverse
 from urllib.parse import urlencode
 from django.shortcuts import redirect
-try:
-    from .editbeworld import beworld
-except:
-    pass
+
+from .editbeworld import beworld
+
 import glob
 from django.http.response import JsonResponse
 
