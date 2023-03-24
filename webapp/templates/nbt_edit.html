@@ -19,17 +19,17 @@
     <p></p>
     <form method="post">
         <h4>Settings</h4>
-        <div class="border col-7">
+        <div class="border col-12">
         <p></p>
         {% csrf_token %}
 
         {{ form1.media }}
         <div class="form-group">
-        <label>world uuid (internal)</label>
+        <label>world uuid (read-only)</label>
         {{ form1.worldid }}
         </div>
         
-        <label>leveldb key</label>
+        <label>leveldb key (read-only)</label>
         {{ form1.key }}
 
         <p></p>
@@ -48,6 +48,8 @@
               <option value="2">block entity</option>
               <option value="3">village</option>
               <option value="4">player</option>
+              <option value="5">level.dat</option>
+              <option value="6">all keys (except for subchunks)</option>
               
             </select>
             <p></p>
@@ -109,7 +111,15 @@
                 },
                 success: function (data) {
                     console.log(data.nbts);
-                    if (data.type == "0") {
+                    if (data.type == "5") {
+                      let html_data = '<option value="level.dat">level.dat</option>';
+                      $("#id_nbt").html(html_data);
+                    }
+                    else if (data.type == "0") {
+                      let html_data = '<option value="dummy">-- select NBT --</option>';
+                      $("#id_nbt").html(html_data);
+                    }
+                    else if (data.nbts == "dummy"){
                       let html_data = '<option value="dummy">-- select NBT --</option>';
                       $("#id_nbt").html(html_data);
                     }
@@ -140,6 +150,10 @@
                 success: function (data) {
                     console.log(data.nbts);
                     if (data.type == "0") {$("#id_nbt").html('<option value="dummy">-- select NBT --</option>');}
+                    else if (data.nbts == "dummy"){
+                      let html_data = '<option value="dummy">-- select NBT --</option>';
+                      $("#id_nbt").html(html_data);
+                    }
                     else {
                       let html_data = '<option value="dummy">-- select NBT --</option>';
                       data.nbts.forEach(function (data) {

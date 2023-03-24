@@ -29,11 +29,11 @@ def getnbtinfo(request):
     obj = beworld(worldfname)
     existingChunks = obj.getexistingChunks(dimid)
     
-    if worldid == "dummy":
-        return JsonResponse({"nbts":{},"type":typeid})
+    if dimid == "dummy" and typeid == "2":
+        return JsonResponse({"nbts":"dummy","type":typeid})
 
     elif typeid == "0":
-        return JsonResponse({"nbts":{},"type":typeid})
+        return JsonResponse({"nbts":"none","type":typeid})
     
     elif typeid == "1":
          return JsonResponse({"nbts":obj.getChoiceOfEntity(),"type":typeid})
@@ -47,8 +47,14 @@ def getnbtinfo(request):
     elif typeid == "4":
         return JsonResponse({"nbts":[[key[0],key[0]] for key in obj.keylist if "player" in key[0]],"type":typeid})
 
+    elif typeid == "5":
+        return JsonResponse({"nbts":"none","type":typeid})
+    
+    elif typeid == "6":
+        return JsonResponse({"nbts":[[key[0],key[0]] for key in obj.keylist if not (key[0].startswith("@"))],"type":typeid})
+    
     else:
-        return JsonResponse({"nbts":{},"type":typeid})
+        return JsonResponse({"nbts":"none","type":typeid})
 
 
 def save_worlddata(request):
@@ -58,15 +64,15 @@ def save_worlddata(request):
     save_dir = "/tmp/"+worldID+"/"
     dirdict = json.loads(request.POST['directories'])
     #nfiles = len(file["file_field"])
-    print(dirdict)
-    print("###")
-    print(len(request.FILES.getlist("file_field")))
+    #print(dirdict)
+    #print("###")
+    #print(len(request.FILES.getlist("file_field")))
     flist = [file.name for file in request.FILES.getlist("file_field")]
-    print(len(flist))
+    #print(len(flist))
     i=0
     for key in flist:
         
-        print(request.FILES.getlist("file_field")[i].name)
+        #print(request.FILES.getlist("file_field")[i].name)
         
         f = request.FILES.getlist("file_field")[i]
         
@@ -76,52 +82,45 @@ def save_worlddata(request):
         with open(fpath,"wb") as destination:
             bindata = f.open().read()
             destination.write(bindata)
-            #for chunk in f.chunks():
-            #    destination.write(chunk)
         
         i+=1
-    print(i)
     
     return worldID
         
         
 def create_blog_post(request):
 
-    if request.method == 'POST':
-
-        if request.FILES["file_field"]:
+    if request.method == 'POST' and 'directories' in request.POST:
             
-            worldID = save_worlddata(request)
+        worldID = save_worlddata(request)
+        redirect_url = reverse('testview')
+        parameters = urlencode({"worldID":worldID})
+        url = f'{redirect_url}?{parameters}'
+        return redirect(url)
+    
+    elif request.method == 'POST' and request.FILES["file_field"]:
 
-            form1 = dimentionChoiceForm({"worldid": worldID,"choice_dim":0,"choice_type":0})
-
-            redirect_url = reverse('testview')
-            parameters = urlencode({"worldID":worldID})
-            url = f'{redirect_url}?{parameters}'
-            return redirect(url)
+        f = request.FILES.getlist("file_field")[0]
+        
+        worldID = str(uuid.uuid4())
+        save_dir = "/tmp/"+worldID+"/"
+        os.makedirs(save_dir,exist_ok=True)
+        fpath = save_dir+f.name
+        with open(fpath,"wb") as destination:
+            bindata = f.open().read()
+            destination.write(bindata)
+        
+        shutil.unpack_archive(fpath,save_dir+f.name.replace(".zip",""))
+        os.system("rm -rf "+fpath)
+        redirect_url = reverse('testview')
+        parameters = urlencode({"worldID":worldID})
+        url = f'{redirect_url}?{parameters}'
+        return redirect(url)
             
-            #return render(request, 'dimention_choice.html', {"form1": form1, "worldID":worldID})
-            
-        if "submit-form1" in request.POST:
-            form1 = dimentionChoiceForm(request.POST)
-            if form1.is_valid():
-                print(request.POST)
-                #form2 = entityChoiceForm(request.POST)
-                return render(request, 'dimention_choice.html', {"form1": form1, "form2":form2})
-
-        if "submit-form2" in request.POST:
-            if form2.is_valid():
-                print(request.POST)
-                #form2 = entityChoiceForm(request.POST)
-                return render(request, 'dimention_choice.html', {"form1": form1, "form2":form2})
-
     else:
 
         form0 = uploadForm()
-        #form1 = dimentionChoiceForm()
-        #form2 = entityChoiceForm()
-
-    return render(request, 'index.html', {"form0": form0})
+        return render(request, 'index.html', {"form0": form0})
 
 ###
 def testview(request):
@@ -137,11 +136,22 @@ def testview(request):
                 nbt = request.POST.get('nbt')
                 worldidpath = '/tmp/'+worldid+'/'
                 worldfname = glob.glob(worldidpath+"/*/db")[0][:-3]
-                obj = beworld(worldfname)
-                NBTdict = obj.getDictfromkey(nbt)
-                json_str = json.dumps(NBTdict)
-                form1 = dimentionChoiceForm({"worldid": worldid,"key":nbt,"choice_dim":request.POST.get("choice_dim"),"choice_type":request.POST.get("choice_type")})
-                form2 = NBTeditForm({"jsondata":json_str})
+                if nbt == "level.dat":
+                    with open(worldfname+"/level.dat","rb") as f:
+                        bindata = f.read()
+                    header = bindata[0:8]
+                    NBTdict = pb.readNBT(bindata[8:])
+                    json_str = json.dumps(NBTdict)
+                    form1 = dimentionChoiceForm({"worldid": worldid,"key":nbt,"choice_dim":request.POST.get("choice_dim"),"choice_type":request.POST.get("choice_type")})
+                    form2 = NBTeditForm({"jsondata":json_str})
+                
+                else:
+                    obj = beworld(worldfname)
+                    NBTdict = obj.getDictfromkey(nbt)
+                    json_str = json.dumps(NBTdict)
+                    form1 = dimentionChoiceForm({"worldid": worldid,"key":nbt,"choice_dim":request.POST.get("choice_dim"),"choice_type":request.POST.get("choice_type")})
+                    form2 = NBTeditForm({"jsondata":json_str})
+
                 return render(request, 'nbt_edit.html', {"form1":form1,"form2":form2})
 
         if "submit-form2" in request.POST:
@@ -150,14 +160,25 @@ def testview(request):
             if form1.is_valid():
                 
                 worldid = request.POST.get('worldid')
-                nbt = request.POST.get('nbt')
-                key = request.POST.get("key")
-                json_str = request.POST.get('jsondata')
                 worldidpath = '/tmp/'+worldid+'/'
                 worldfname = glob.glob(worldidpath+"/*/db")[0][:-3]
-                json_dict = json.loads(json_str)
-                bindata = pb.writeNBT(json_dict)
-                pb.writebinary(worldfname,key,bindata)
+                key = request.POST.get("key")
+
+                if key == "level.dat":
+                    json_str = request.POST.get('jsondata')
+                    json_dict = json.loads(json_str)
+                    bindata = pb.writeNBT(json_dict)
+                    size = len(bindata)
+                    header = b'\n\x00\x00\x00'+size.to_bytes(4, 'little')
+                    with open(worldfname+"/level.dat","wb") as f:
+                        f.write(header+bindata)
+                
+                else:
+                    json_str = request.POST.get('jsondata')
+                    json_dict = json.loads(json_str)
+                    bindata = pb.writeNBT(json_dict)
+                    pb.writebinary(worldfname,key,bindata)
+                
                 form2 = NBTeditForm({"jsondata":json_str})
                 return render(request, 'nbt_edit.html', {"form1":form1,"form2":form2})
         

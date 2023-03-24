@@ -15,17 +15,26 @@
   <h1>Minecraft Bedrock World Edit <small class="text-muted">version 0.0.1</small></h1>
 </div>
 <p></p>
-<h4>Upload world folder</h4>
+<h4>Upload world folder (for PC)</h4>
 
 <form method='POST' name ="upload" enctype="multipart/form-data">
     {% csrf_token %}
     <input type="file" class="btn btn-light" id="file_input" name="file_field" webkitdirectory directory/>
-    <p></p>
+    
     <input type="text" id="directories" name="directories" hidden />
     
     <button id="btn" class="btn btn-primary">send</button>
     
 </form>
+<p></p>
+<h4>Upload zip file (for iOS/Android)</h4>
+<form method='POST' name ="upload" enctype="multipart/form-data">
+  {% csrf_token %}
+  <input type="file" class="btn btn-light" id="file_input" name="file_field">
+  <button type="submit" id="btn_file" class="btn btn-primary">send</button>
+
+</form>
+
 </div>
 <footer class="footer mt-auto py-3 bg-light">
   <div class="container">
