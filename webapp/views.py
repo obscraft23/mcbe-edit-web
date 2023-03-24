@@ -129,7 +129,8 @@ def testview(request):
     if request.method == 'POST':
 
         if "submit-form1" in request.POST:
-            form1 = dimentionChoiceForm(request.POST)
+            
+            form1 = dimentionChoiceForm({"worldid": request.POST.get('worldid'),"key":request.POST.get('nbt'),"choice_dim":request.POST.get("choice_dim"),"choice_type":request.POST.get("choice_type")})
             if form1.is_valid():
 
                 worldid = request.POST.get('worldid')
@@ -144,11 +145,10 @@ def testview(request):
                 return render(request, 'nbt_edit.html', {"form1":form1,"form2":form2})
 
         if "submit-form2" in request.POST:
-            form1 = dimentionChoiceForm(request.POST)
-            form2 = NBTeditForm(request.POST)
+            form1 = dimentionChoiceForm({"worldid": request.POST.get('worldid'),"key":request.POST.get('key'),"choice_dim":request.POST.get("choice_dim"),"choice_type":request.POST.get("choice_type")})
 
-            if form1.is_valid() and form2.is_valid():
-
+            if form1.is_valid():
+                
                 worldid = request.POST.get('worldid')
                 nbt = request.POST.get('nbt')
                 key = request.POST.get("key")

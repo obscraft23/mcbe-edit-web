@@ -59,7 +59,13 @@
         <button type="submit" class="btn btn-success" name="submit-form1">Change NBT</button>
         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target=#savedata>Overwrite</button>
         <button type="submit" class="btn btn-warning" name="download">Download as mcworld</button>
-
+        <p></p>    
+        </div>
+        <p></p>
+        <h4>Json Tree Editor</h4>
+        {{ form2.media }}
+        {{ form2.jsondata }}
+        
         <div class="modal fade" tabindex="-1" role="dialog" id="savedata">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -82,12 +88,6 @@
                 </div>
             </div>
         </div>
-        <p></p>
-        </div>
-        <p></p>
-        <h4>Json Tree Editor</h4>
-        {{ form2.media }}
-        {{ form2.jsondata }}
     </form>
 </div>
     <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
