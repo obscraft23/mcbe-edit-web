@@ -1,6 +1,5 @@
 from django import forms
 from jsoneditor.forms import JSONEditor
-from .editbeworld import beworld
 import os
 import glob
 
