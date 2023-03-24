@@ -111,6 +111,11 @@ def create_blog_post(request):
             destination.write(bindata)
         
         shutil.unpack_archive(fpath,save_dir+f.name.replace(".zip",""))
+        if len(glob.glob(save_dir+"*/db")) == 0:
+            os.system("mv "+save_dir+f.name.replace(".zip","")+" "+save_dir+"3f33756f-76c8-4caf-a18e-8c8a47bde0")
+            worldfname = glob.glob(save_dir+"*/*/db")[0][:-3]
+            os.system("mv "+worldfname+" "+save_dir)
+            os.system("rm -rf "+save_dir+"3f33756f-76c8-4caf-a18e-8c8a47bde0")
         os.system("rm -rf "+fpath)
         redirect_url = reverse('testview')
         parameters = urlencode({"worldID":worldID})
