@@ -13,6 +13,9 @@ from .editbeworld import beworld
 
 import glob
 from django.http.response import JsonResponse
+import pybedrock as pb
+from django.http import FileResponse
+import shutil
 
 
 def getnbtinfo(request):
@@ -21,17 +24,15 @@ def getnbtinfo(request):
     typeid = request.POST.get('type')
     dimid = request.POST.get('choice_dim')
     
-    print(worldid)
-    #worldidpath = os.path.join(os.path.dirname(os.path.abspath(__file__)),"data/"+worldid+'/')
     worldidpath = "/tmp/"+worldid+'/'
-    print(worldidpath)
     worldfname = glob.glob(worldidpath+"/*/db")[0][:-3]
-    print(worldfname)
     obj = beworld(worldfname)
     existingChunks = obj.getexistingChunks(dimid)
-    #obj.getChoiceFromSubChunk(existingChunks)
+    
+    if worldid == "dummy":
+        return JsonResponse({"nbts":{},"type":typeid})
 
-    if typeid == "0":
+    elif typeid == "0":
         return JsonResponse({"nbts":{},"type":typeid})
     
     elif typeid == "1":
@@ -109,9 +110,10 @@ def create_blog_post(request):
                 return render(request, 'dimention_choice.html', {"form1": form1, "form2":form2})
 
         if "submit-form2" in request.POST:
-            form2 = dimentionChoiceForm(request.POST)
             if form2.is_valid():
-                return redirect('blog_post_list')
+                print(request.POST)
+                #form2 = entityChoiceForm(request.POST)
+                return render(request, 'dimention_choice.html', {"form1": form1, "form2":form2})
 
     else:
 
@@ -121,6 +123,7 @@ def create_blog_post(request):
 
     return render(request, 'index.html', {"form0": form0})
 
+###
 def testview(request):
     
     if request.method == 'POST':
@@ -129,31 +132,50 @@ def testview(request):
             form1 = dimentionChoiceForm(request.POST)
             if form1.is_valid():
 
-                print(request.POST)
                 worldid = request.POST.get('worldid')
                 nbt = request.POST.get('nbt')
-                print(nbt)
-                print(worldid)
-                #worldidpath = os.path.join(os.path.dirname(os.path.abspath(__file__)),"data/"+worldid+'/')
                 worldidpath = '/tmp/'+worldid+'/'
-                print(worldidpath)
                 worldfname = glob.glob(worldidpath+"/*/db")[0][:-3]
-                print(worldfname)
                 obj = beworld(worldfname)
-                print(obj.worldfname)
                 NBTdict = obj.getDictfromkey(nbt)
-                print(NBTdict)
                 json_str = json.dumps(NBTdict)
-                #if request.POST["choice_type"] == '0':
+                form1 = dimentionChoiceForm({"worldid": worldid,"key":nbt,"choice_dim":request.POST.get("choice_dim"),"choice_type":request.POST.get("choice_type")})
                 form2 = NBTeditForm({"jsondata":json_str})
                 return render(request, 'nbt_edit.html', {"form1":form1,"form2":form2})
 
         if "submit-form2" in request.POST:
-            form2 = dimentionChoiceForm(request.POST)
-            if form2.is_valid():
-                return redirect('blog_post_list')
-    
+            form1 = dimentionChoiceForm(request.POST)
+            form2 = NBTeditForm(request.POST)
+
+            if form1.is_valid() and form2.is_valid():
+
+                worldid = request.POST.get('worldid')
+                nbt = request.POST.get('nbt')
+                key = request.POST.get("key")
+                json_str = request.POST.get('jsondata')
+                worldidpath = '/tmp/'+worldid+'/'
+                worldfname = glob.glob(worldidpath+"/*/db")[0][:-3]
+                json_dict = json.loads(json_str)
+                bindata = pb.writeNBT(json_dict)
+                pb.writebinary(worldfname,key,bindata)
+                form2 = NBTeditForm({"jsondata":json_str})
+                return render(request, 'nbt_edit.html', {"form1":form1,"form2":form2})
+        
+        if "download" in request.POST:
+            worldid = request.POST.get('worldid')
+            worldidpath = '/tmp/'+worldid+'/'
+            worldfname = glob.glob(worldidpath+"/*/db")[0][:-3]
+
+            shutil.make_archive(worldidpath+worldid, format='zip', root_dir=worldfname)
+            os.system("mv "+worldidpath+worldid+".zip "+worldidpath+worldid+".mcworld")
+            
+            file_path = worldidpath+worldid+".mcworld"
+            filename = worldid+".mcworld"
+            return FileResponse(open(file_path, "rb"), as_attachment=True, filename=filename)
+            
     else:
         worldID = request.GET.get("worldID")
-        form1 = dimentionChoiceForm({"worldid": worldID,"choice_dim":0,"choice_type":0})
-        return render(request, 'dimention_choice.html', {"form1": form1})
+        form1 = dimentionChoiceForm({"worldid": worldID,"key":"None","choice_dim":0,"choice_type":0})
+        json_str = "[]"
+        form2 = NBTeditForm({"jsondata":json_str})
+        return render(request, 'nbt_edit.html', {"form1": form1,"form2": form2})

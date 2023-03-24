@@ -6,38 +6,91 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Source code generated using layoutit.com">
-  <meta name="author" content="LayoutIt!">
-  
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
 
 </head>
 <body>
-
 {% block content %}
-    <h1>world edit</h1>
+<div class="container-fluid">
+    <div class="page-header">
+        <h1>Minecraft Bedrock World Edit <small class="text-muted">version 0.0.1</small></h1>
+    </div>
+    <p></p>
     <form method="post">
+        <h4>Settings</h4>
+        <div class="border col-7">
+        <p></p>
         {% csrf_token %}
 
         {{ form1.media }}
-        
-        {{ form1.worldid }}
-        {{ form1.choice_dim }}
-        {{ form1.choice_type }}
-        
         <div class="form-group">
-          <select id="id_nbt" class="form-control" name="nbt">
-            <option value="dummy">--select NBT--</option>
-          </select>
+        <label>world uuid (internal)</label>
+        {{ form1.worldid }}
         </div>
-        <button type="submit" name="submit-form1">Submit</button>
+        
+        <label>leveldb key</label>
+        {{ form1.key }}
 
+        <p></p>
+
+        <div class="form-group">
+            <select id="id_choice_dim" class="form-select form-select-sm" name="choice_dim">
+              <option value="dummy">-- select dimension --</option>
+              <option value="0">Overworld</option>
+              <option value="1">Nether</option>
+              <option value="2">End</option>
+            </select>
+        
+            <select id="id_type" class="form-select form-select-sm" name="choice_type">
+              <option value="0">-- select category --</option>
+              <option value="1">entity</option>
+              <option value="2">block entity</option>
+              <option value="3">village</option>
+              <option value="4">player</option>
+              
+            </select>
+            <p></p>
+            <select id="id_nbt" class="form-select form-select-sm" name="nbt">
+              <option value="dummy">-- select NBT --</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-success" name="submit-form1">Change NBT</button>
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target=#savedata>Overwrite</button>
+        <button type="submit" class="btn btn-warning" name="download">Download as mcworld</button>
+
+        <div class="modal fade" tabindex="-1" role="dialog" id="savedata">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Overwrite data on the world</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Once overwritten, it cannot be undone. Is that OK?</p>
+                    </div>
+                    <div class="modal-footer">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" name="submit-form2" class="btn btn-danger">Overwrite</button>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p></p>
+        </div>
+        <p></p>
+        <h4>Json Tree Editor</h4>
         {{ form2.media }}
         {{ form2.jsondata }}
-        
     </form>
-  
+</div>
     <script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
-
     <script>
         $("#id_type").change(function () {
             var typeid = $(this).val();
@@ -55,10 +108,11 @@
                 success: function (data) {
                     console.log(data.nbts);
                     if (data.type == "0") {
-                      $("#id_nbt").html('<option value="dummy">--select NBT--</option>');
+                      let html_data = '<option value="dummy">-- select NBT --</option>';
+                      $("#id_nbt").html(html_data);
                     }
                     else {
-                      let html_data = '<option value="dummy">--select NBT--</option>';
+                      let html_data = '<option value="dummy">-- select NBT --</option>';
                       data.nbts.forEach(function (data) {
                           console.log(data)
                           html_data += `<option value="${data[0]}">${data[1]}</option>`
@@ -83,9 +137,9 @@
                 },
                 success: function (data) {
                     console.log(data.nbts);
-                    if (data.type == "0") {$("#id_nbt").html('<option value="dummy">--select NBT--</option>');}
+                    if (data.type == "0") {$("#id_nbt").html('<option value="dummy">-- select NBT --</option>');}
                     else {
-                      let html_data = '<option value="dummy">--select NBT--</option>';
+                      let html_data = '<option value="dummy">-- select NBT --</option>';
                       data.nbts.forEach(function (data) {
                           console.log(data)
                           html_data += `<option value="${data[0]}">${data[1]}</option>`
@@ -97,6 +151,6 @@
         });
     </script>
 {% endblock %}
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 </body>
 </html>
