@@ -3,7 +3,7 @@
 
 A web application based on [pybedrock](https://github.com/obscraft23/pybedrock) to edit Minecraft Bedrock world data
 
-<img src="mcbe-edit-web.demo.png" width=700>
+<img src="docs/mcbe-edit-web.demo.png" width=700>
 
 ## Report issues
 Please report any bugs/issues on app as issues. It is helpful for me to improve the project.</br>
