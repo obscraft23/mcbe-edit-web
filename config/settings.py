@@ -38,7 +38,6 @@ ALLOWED_HOSTS = [
 INSTALLED_APPS = [
     'jsoneditor',
     'webapp',
-    'analytical',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
