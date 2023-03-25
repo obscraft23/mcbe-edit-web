@@ -12,7 +12,7 @@
 {% block content %}
 <div class="container-fluid">
 <div class="page-header">
-  <h1>Minecraft Bedrock World Edit <small class="text-muted">version 0.0.1</small></h1>
+  <h1>Minecraft Bedrock World Editor <small class="text-muted">version 0.0.1</small></h1>
 </div>
 
 <p></p>
@@ -37,15 +37,19 @@
   <input type="file" class="btn btn-light" id="file_input" name="file_field">
   <button type="submit" id="btn_file" class="btn btn-primary">send</button>
   <br>- Zip file larger than <strong class="text-danger">4.5MB</strong> cannot be sent due to the <A href="https://vercel.com/docs/concepts/limits/overview#serverless-function-payload-size-limit">Vercel Payload Size Limit</A>.</br>
-
+  <p></p>
 </form>
 
 </div>
 <footer class="footer mt-auto py-3 bg-light">
   <div class="container">
-    <br><span class="text-muted"><A href="https://github.com/obscraft23/mcbe-edit-web">mcbe-edit-web</A> v0.0.1 copyright (c) 2023 obscraft23 </span></br>
-    <span class="text-muted">powered by <A href="https://www.djangoproject.com/">django</A> and <A href="https://github.com/obscraft23/pybedrock">pybedrock</A></span>
-  </div>
+    <span class="text-muted"><A href="https://github.com/obscraft23/mcbe-edit-web" target="_blank">mcbe-edit-web</A> v0.0.1 copyright (c) 2023 obscraft23 powered by <A href="https://www.djangoproject.com/" target="_blank">django</A> and <A href="https://github.com/obscraft23/pybedrock" target="_blank">pybedrock</A></span></br>
+    
+    <span class="text-muted">
+      Support this project by <a href="https://www.buymeacoffee.com/obscraft23" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 21px !important;width: 87px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
+    </span>
+    
+  <div>
 </footer>
 <script>
  var btn = document.getElementById('btn');

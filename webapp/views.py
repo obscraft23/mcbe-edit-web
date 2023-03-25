@@ -53,6 +53,9 @@ def getnbtinfo(request):
     elif typeid == "6":
         return JsonResponse({"nbts":[[key[0],key[0]] for key in obj.keylist if not (key[0].startswith("@"))],"type":typeid})
     
+    elif typeid == "7":
+        return JsonResponse({"nbts":[[key[0],key[0]] for key in obj.keylist if (key[0].startswith("structuretemplate"))],"type":typeid})
+
     else:
         return JsonResponse({"nbts":"none","type":typeid})
 
@@ -60,15 +63,10 @@ def getnbtinfo(request):
 def save_worlddata(request):
     
     worldID = str(uuid.uuid4())
-    #save_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)),"data/")+worldID+"/"
     save_dir = "/tmp/"+worldID+"/"
     dirdict = json.loads(request.POST['directories'])
-    #nfiles = len(file["file_field"])
-    #print(dirdict)
-    #print("###")
-    #print(len(request.FILES.getlist("file_field")))
     flist = [file.name for file in request.FILES.getlist("file_field")]
-    #print(len(flist))
+    
     i=0
     for key in flist:
         
@@ -88,12 +86,12 @@ def save_worlddata(request):
     return worldID
         
         
-def create_blog_post(request):
+def index_upload(request):
 
     if request.method == 'POST' and 'directories' in request.POST:
             
         worldID = save_worlddata(request)
-        redirect_url = reverse('testview')
+        redirect_url = reverse('editorview')
         parameters = urlencode({"worldID":worldID})
         url = f'{redirect_url}?{parameters}'
         return redirect(url)
@@ -117,7 +115,7 @@ def create_blog_post(request):
             os.system("mv "+worldfname+" "+save_dir)
             os.system("rm -rf "+save_dir+"3f33756f-76c8-4caf-a18e-8c8a47bde0")
         os.system("rm -rf "+fpath)
-        redirect_url = reverse('testview')
+        redirect_url = reverse('editorview')
         parameters = urlencode({"worldID":worldID})
         url = f'{redirect_url}?{parameters}'
         return redirect(url)
@@ -128,7 +126,7 @@ def create_blog_post(request):
         return render(request, 'index.html', {"form0": form0})
 
 ###
-def testview(request):
+def editorview(request):
     
     if request.method == 'POST':
 
