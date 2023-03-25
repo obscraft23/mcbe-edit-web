@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-1rs+d&kr#cyfw(ca0u1gunnerir(94iap1_gn2$^u7-zri8wvi'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     #'*',
@@ -69,6 +69,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'config.context_processors.google_analytics',
             ],
         },
     },
@@ -140,3 +141,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 STATICFILES_DIRS = os.path.join(BASE_DIR, 'static/'),
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static/')
+
+GOOGLE_ANALYTICS_TRACKING_ID="G-BC2S1FGB8V"
