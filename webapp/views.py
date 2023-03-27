@@ -129,6 +129,7 @@ def index_upload(request):
 def editorview(request):
     
     if request.method == 'POST':
+        print(request.POST)
 
         if "submit-form1" in request.POST:
             
@@ -196,8 +197,28 @@ def editorview(request):
             file_path = worldidpath+worldid+".mcworld"
             filename = worldid+".mcworld"
             return FileResponse(open(file_path, "rb"), as_attachment=True, filename=filename)
+        
+        if "mcsadd" in request.POST:
+            print(request.POST)
+            worldid = request.POST.get('worldid')
+            worldidpath = '/tmp/'+worldid+'/'
+            worldfname = glob.glob(worldidpath+"/*/db")[0][:-3]
+            form1 = dimentionChoiceForm({"worldid": worldid,"key":"None","choice_dim":0,"choice_type":0})
+            json_str = request.POST.get('jsoneditor')
+            form2 = NBTeditForm({"jsondata":json_str})
+
+            f = request.FILES.getlist("file_field")[0]
+            fpath = worldidpath+f.name
+            key = "structuretemplate_mystructure:"+f.name.replace(".mcstructure","")
+            with open(fpath,"wb") as destination:
+                bindata = f.open().read()
+                destination.write(bindata)
+            pb.writebinary(worldfname,key,bindata)
+
+            return render(request, 'nbt_edit.html', {"form1": form1,"form2": form2})
+        
             
-    else:
+    else: 
         worldID = request.GET.get("worldID")
         form1 = dimentionChoiceForm({"worldid": worldID,"key":"None","choice_dim":0,"choice_type":0})
         json_str = "[]"

@@ -21,19 +21,26 @@
     <p></p>
 
     <h5>How to use</h5>
+    <h6>general</h6>
     1. Select dimension (for block entity) and category.</br>
     2. Select NBT to edit</br>
     3. "Change NBT" to show the NBT in the editor.</br>
     4. You can edit the NBT as a json in the editor.</br>
     5. "Overwrite" to apply your modified NBT to world data.</br>
+    <p></p>
+    <h6>add mcstructure</h6>
+    1. Choose mcstructure file in "Add mcstructure".</br>
+    2. Press "add mcstructure".</br>
+      (You can check the mcstructure in the general usage of the editor.)</br>
+    3. You can download the world pressing "Download as mcworld".
     
     <p></p>
     <h5>Bug report</h5>
     Please submit issues to <A href="https://github.com/obscraft23/mcbe-edit-web" target="_blank">mcbe-edit-web</A> github repository.
 
     <p></p>
-    <form method="post">
-        <h4>Settings</h4>
+    <form method="post" enctype="multipart/form-data">
+        <h4>Info</h4>
         <div class="border col-12">
         <p></p>
         {% csrf_token %}
@@ -47,8 +54,21 @@
         <label>leveldb key (read-only)</label>
         {{ form1.key }}
 
+        </div>
         <p></p>
-
+        <h4>Add mcstructure</h4>
+        <div class="border col-12">
+          <p></p>
+            {% csrf_token %}
+            <input type="file" class="btn btn-light" id="file_input" name="file_field">
+            <button type="submit" name="mcsadd" id="mcsadd" class="btn btn-primary">add mcstructure</button>
+            <p></p>
+          
+        </div>
+        <p></p>
+        <h4>Operations</h4>
+        <div class="border col-12">
+        <p></p>
         <div class="form-group">
             <select id="id_choice_dim" class="form-select form-select-sm" name="choice_dim">
               <option value="dummy">-- select dimension --</option>
