@@ -19,7 +19,7 @@ import shutil
 
 
 def getnbtinfo(request):
-
+    print(os.listdir("/tmp"))
     worldid = request.POST.get('worldid')
     typeid = request.POST.get('type')
     dimid = request.POST.get('choice_dim')
@@ -28,7 +28,6 @@ def getnbtinfo(request):
     worldfname = glob.glob(worldidpath+"/*/db")[0][:-3]
     obj = beworld(worldfname)
     #existingChunks = obj.getexistingChunks(dimid)
-    print(os.listdir("/tmp"))
     
     if dimid == "dummy" and typeid == "2":
         return JsonResponse({"nbts":"dummy","type":typeid})
