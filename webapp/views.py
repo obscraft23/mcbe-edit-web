@@ -27,7 +27,7 @@ def getnbtinfo(request):
     worldidpath = "/tmp/"+worldid+'/'
     worldfname = glob.glob(worldidpath+"/*/db")[0][:-3]
     obj = beworld(worldfname)
-    existingChunks = obj.getexistingChunks(dimid)
+    #existingChunks = obj.getexistingChunks(dimid)
     
     if dimid == "dummy" and typeid == "2":
         return JsonResponse({"nbts":"dummy","type":typeid})
