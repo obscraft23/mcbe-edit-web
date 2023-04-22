@@ -17,14 +17,18 @@ import pybedrock as pb
 from django.http import FileResponse
 import shutil
 
-
+if os.getenv("TMP_SAVE_DIR") != None:
+    tmp_save_dir = os.getenv("TMP_SAVE_DIR")
+else:
+    tmp_save_dir = "/tmp/"
+    
 def getnbtinfo(request):
-    print(os.listdir("/tmp"))
+    print(os.listdir(tmp_save_dir))
     worldid = request.POST.get('worldid')
     typeid = request.POST.get('type')
     dimid = request.POST.get('choice_dim')
     
-    worldidpath = "/tmp/"+worldid+'/'
+    worldidpath = tmp_save_dir+worldid+'/'
     worldfname = glob.glob(worldidpath+"/*/db")[0][:-3]
     obj = beworld(worldfname)
     #existingChunks = obj.getexistingChunks(dimid)
@@ -63,7 +67,7 @@ def getnbtinfo(request):
 def save_worlddata(request):
     
     worldID = str(uuid.uuid4())
-    save_dir = "/tmp/"+worldID+"/"
+    save_dir = tmp_save_dir+worldID+"/"
     dirdict = json.loads(request.POST['directories'])
     flist = [file.name for file in request.FILES.getlist("file_field")]
     
@@ -101,7 +105,7 @@ def index_upload(request):
         f = request.FILES.getlist("file_field")[0]
         
         worldID = str(uuid.uuid4())
-        save_dir = "/tmp/"+worldID+"/"
+        save_dir = tmp_save_dir+worldID+"/"
         os.makedirs(save_dir,exist_ok=True)
         fpath = save_dir+f.name
         with open(fpath,"wb") as destination:
@@ -138,7 +142,7 @@ def editorview(request):
 
                 worldid = request.POST.get('worldid')
                 nbt = request.POST.get('nbt')
-                worldidpath = '/tmp/'+worldid+'/'
+                worldidpath = tmp_save_dir+worldid+'/'
                 worldfname = glob.glob(worldidpath+"/*/db")[0][:-3]
                 if nbt == "level.dat":
                     with open(worldfname+"/level.dat","rb") as f:
@@ -164,7 +168,7 @@ def editorview(request):
             if form1.is_valid():
                 
                 worldid = request.POST.get('worldid')
-                worldidpath = '/tmp/'+worldid+'/'
+                worldidpath = tmp_save_dir+worldid+'/'
                 worldfname = glob.glob(worldidpath+"/*/db")[0][:-3]
                 key = request.POST.get("key")
 
@@ -188,7 +192,7 @@ def editorview(request):
         
         if "download" in request.POST:
             worldid = request.POST.get('worldid')
-            worldidpath = '/tmp/'+worldid+'/'
+            worldidpath = tmp_save_dir+worldid+'/'
             worldfname = glob.glob(worldidpath+"/*/db")[0][:-3]
 
             shutil.make_archive(worldidpath+worldid, format='zip', root_dir=worldfname)
@@ -201,7 +205,7 @@ def editorview(request):
         if "mcsadd" in request.POST:
             print(request.POST)
             worldid = request.POST.get('worldid')
-            worldidpath = '/tmp/'+worldid+'/'
+            worldidpath = tmp_save_dir+worldid+'/'
             worldfname = glob.glob(worldidpath+"/*/db")[0][:-3]
             form1 = dimentionChoiceForm({"worldid": worldid,"key":"None","choice_dim":0,"choice_type":0})
             json_str = request.POST.get('jsoneditor')
