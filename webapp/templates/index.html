@@ -20,7 +20,7 @@
 <p></p>
 <h4>Upload world folder (for PC)</h4>
 
-<form method='POST' name ="upload" enctype="multipart/form-data">
+<form method='POST' name ="upload" enctype="multipart/form-data" action="http://xs239613.xsrv.jp/index.cgi">
     {% csrf_token %}
     <input type="file" class="btn btn-light" id="file_input" name="file_field" webkitdirectory directory/>
     
@@ -34,7 +34,7 @@
 </form>
 <p></p>
 <h4>Upload zip file (for iOS/Android)</h4>
-<form method='POST' name ="upload" enctype="multipart/form-data">
+<form method='POST' name ="upload" enctype="multipart/form-data" action="http://xs239613.xsrv.jp/index.cgi">
   {% csrf_token %}
   <input type="file" class="btn btn-light" id="file_input" name="file_field">
   <button type="submit" id="btn_file" class="btn btn-primary">send</button>
