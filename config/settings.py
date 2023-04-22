@@ -27,12 +27,12 @@ DEBUG = False
 
 ALLOWED_HOSTS = [
     '*',
-    '127.0.0.1',
-    'localhost',
-    '.vercel.app',
-    '.onrender.com',
-    'xs239613.xsrv.jp',
-    '.now.sh'
+    #'127.0.0.1',
+    #'localhost',
+    #'.vercel.app',
+    #'.onrender.com',
+    #'xs239613.xsrv.jp',
+    #'.now.sh'
 ]
 
 
