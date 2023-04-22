@@ -31,7 +31,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '.vercel.app',
     '.onrender.com',
-    '.xsrv.jp',
+    'xs239613.xsrv.jp',
     '.now.sh'
 ]
 
